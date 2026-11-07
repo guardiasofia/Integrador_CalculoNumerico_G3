@@ -1,6 +1,6 @@
 function COLASI()
 
-% cola simple - 1 servidor - (VERSION MATLAB)
+% cola simple - 1 servidor - (GNU OCTAVE)
 % (Tiempo Uniforme Entre Arribos y de Servicio)
 % CAPACIDAD MAXIMA DE LA COLA = 200 ENTIDADES 
 %
@@ -21,7 +21,7 @@ function COLASI()
 % NEE          Numero Total de Entidades que entran en el Sistema
 % NES          Numero Total de Entidades Servidas
 % QLIMIT       Capacidad Maxima de la Cola
-% TLE          Tiempo del último evento
+% TLE          Tiempo del ï¿½ltimo evento
 % TNA          Tiempo del proximo arribo
 % TND          Tiempo de la proxima partida
 % TNOW         Tiempo actual de la Simulacion (Master Clock)

@@ -1,6 +1,6 @@
 # Integrador de Cálculo Numérico - Grupo 3
 
-Simulador de una cola simple desarrollado en MATLAB como punto de partida para el trabajo integrador de Cálculo Numérico.
+Simulador de una cola simple desarrollado para **GNU Octave** como punto de partida para el trabajo integrador de Cálculo Numérico.
 
 **Integrantes:** Sofía Guardia y Jesús Casabillanos.
 
@@ -22,24 +22,43 @@ Los cuatro modelos mencionados en la consigna (capacidad finita con pérdidas, d
 
 ## Requisitos
 
-- MATLAB.
+- GNU Octave instalado en el equipo.
+- Extensión de GNU Octave para Visual Studio Code (opcional, facilita la edición y ejecución desde el editor).
 - Los cinco archivos `.m` en la misma carpeta.
 
-## Cómo ejecutar
+> **Importante:** la extensión de VS Code no reemplaza a GNU Octave. La extensión integra el editor con el intérprete; también hay que instalar GNU Octave por separado. Se puede obtener desde [octave.org/download](https://www.octave.org/download).
 
-1. Abrir MATLAB y establecer como carpeta actual la carpeta del proyecto.
-2. Ejecutar en la ventana de comandos:
+### Comprobar la instalación
 
-   ```matlab
+Abrir la terminal integrada de VS Code y ejecutar:
+
+```powershell
+octave --version
+```
+
+Si aparece un mensaje indicando que `octave` no se reconoce, GNU Octave puede no estar instalado o su carpeta de instalación no está agregada a `PATH`. En ese caso, completar la instalación y agregar Octave al `PATH` de Windows; después, cerrar y volver a abrir VS Code para que la terminal actualice el `PATH`.
+
+### Ejecutar el simulador
+
+1. Abrir en VS Code la carpeta del proyecto y abrir una terminal integrada en esa carpeta.
+2. Iniciar Octave desde la terminal:
+
+   ```powershell
+   octave --no-gui
+   ```
+
+3. En el indicador de Octave, ejecutar:
+
+   ```octave
    COLASI
    ```
 
-3. Ingresar los parámetros que solicita el programa:
+4. Ingresar los parámetros que solicita el programa:
    - Longitud de la simulación (`LS`).
    - Tiempo mínimo y máximo entre arribos (`MINIAT`, `MAXIAT`).
    - Tiempo mínimo y máximo de servicio (`MINST`, `MAXST`).
 
-Los intervalos entre arribos y los tiempos de servicio se generan con `rand`, por lo que las corridas pueden dar resultados distintos. Para reproducir una corrida se puede fijar la semilla antes de ejecutar, por ejemplo con `rng(1)`.
+Para salir del indicador de Octave, ejecutar `exit`. Los intervalos entre arribos y los tiempos de servicio se generan con `rand`, por lo que las corridas pueden dar resultados distintos. Para reproducir una corrida se puede fijar la semilla antes de ejecutar, por ejemplo con `rng(1)`.
 
 ## Funcionamiento del modelo base
 
