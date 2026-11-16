@@ -41,21 +41,21 @@ function r = COLASI(p)
     if (MODELO == 2)
         NSERV  = 2;
         BUSY   = [0, 0];
-        TND    = [inf, inf];
+        TND    = [99999, 99999];
         CSUTIL = [0, 0];
         LQ = 0; CLQ = 0; TQT = 0; NSQ = 0;
         ATTRIB = zeros(CAP_ARRAY, 1);
     elseif (MODELO == 3)
         NSERV  = 1;
         BUSY   = 0;
-        TND    = inf;
+        TND    = 99999;
         CSUTIL = 0;
         LQ = [0, 0]; CLQ = [0, 0]; TQT = [0, 0]; NSQ = [0, 0];
         ATTRIB = zeros(CAP_ARRAY, 2);
     else
         NSERV  = 1;
         BUSY   = 0;
-        TND    = inf;
+        TND    = 99999;
         CSUTIL = 0;
         LQ = 0; CLQ = 0; TQT = 0; NSQ = 0;
         ATTRIB = zeros(CAP_ARRAY, 1);
@@ -73,7 +73,7 @@ function r = COLASI(p)
         if (MODELO == 4 && LQ(1) > 0)
             TAB = ATTRIB(1, 1) + TMAXQ;
         else
-            TAB = inf;
+            TAB = 99999;
         end
 
         % Desempate por orden: 1 Partida, 2 Abandono, 3 Arribo
@@ -137,7 +137,7 @@ function [NES, TQT, BUSY, LQ, ATTRIB, TND, NSQ] = DEPART(NES, LQ, TNOW, ATTRIB, 
 
     if (sum(LQ) == 0)
         BUSY(K) = 0;
-        TND(K) = inf;
+        TND(K) = 99999;
     else
         J = 1;
         if (MODELO == 3 && LQ(2) > LQ(1))

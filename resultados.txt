@@ -2,9 +2,9 @@ Reproducibilidad (dif ALQ, misma semilla 42): 0
 
 ================ MODELO 1 (N=30, LS=10000) ================
 Conservacion OK en todas las replicas: 1
-ALQ     : 0.0739 +- 0.0045
-AWTQ    : 0.1479 +- 0.0085
-ASUTIL  : 0.7488 +- 0.0041
+ALQ     : 0.0752 +- 0.0035
+AWTQ    : 0.1503 +- 0.0067
+ASUTIL  : 0.7507 +- 0.0032
 Bloqueos: 0.00 +- 0.00
 T.Medio Bloq: NaN (0/30 corridas con bloqueos)
 
@@ -12,94 +12,23 @@ T.Medio Bloq: NaN (0/30 corridas con bloqueos)
 Conservacion OK en todas las replicas: 1
 ALQ     : 0.0000 +- 0.0000
 AWTQ    : 0.0000 +- 0.0000
-ASUTIL  : 0.3743 +- 0.0020
-ASUTIL1 : 0.5994 +- 0.0028
-ASUTIL2 : 0.1493 +- 0.0042
-Suma ASUTIL1+ASUTIL2: 0.7487
+ASUTIL  : 0.3753 +- 0.0016
+ASUTIL1 : 0.5997 +- 0.0023
+ASUTIL2 : 0.1509 +- 0.0037
+Suma ASUTIL1+ASUTIL2: 0.7507
 
 ================ MODELO 3 (N=30, LS=10000) ================
 Conservacion OK en todas las replicas: 1
-ALQ     : 0.0739 +- 0.0045
-AWTQ    : 0.1479 +- 0.0085
-ASUTIL  : 0.7488 +- 0.0041
-ALQ1    : 0.0698 +- 0.0037 | ALQ2 : 0.0042 +- 0.0015
-AWTQ1   : 0.4390 +- 0.0126 | AWTQ2: 3.0795 +- 0.7958
-(Validacion teorica: ASUTIL deberia rondar 0.75)
+ALQ     : 0.0752 +- 0.0035
+AWTQ    : 0.1503 +- 0.0067
+ASUTIL  : 0.7507 +- 0.0032
+ALQ1    : 0.0707 +- 0.0028 | ALQ2 : 0.0045 +- 0.0012
+AWTQ1   : 0.4411 +- 0.0095 | AWTQ2: 2.7465 +- 0.5169
 
 ================ MODELO 4 (N=30, LS=10000) ================
 Conservacion OK en todas las replicas: 1
-ALQ     : 0.0739 +- 0.0047
-AWTQ    : 0.1476 +- 0.0089
-ASUTIL  : 0.7496 +- 0.0043
-Abandonos: 0.30 +- 0.47
-Prob Aband: 0.0001 +- 0.0001
-Reproducibilidad (dif ALQ, misma semilla 42): 0
-
-================ MODELO 1 (N=30, LS=10000) ================
-Conservacion OK en todas las replicas: 1
-ALQ     : 0.0739 +- 0.0045
-AWTQ    : 0.1479 +- 0.0085
-ASUTIL  : 0.7488 +- 0.0041
-Bloqueos: 0.00 +- 0.00
-T.Medio Bloq: NaN (0/30 corridas con bloqueos)
-
-================ MODELO 2 (N=30, LS=10000) ================
-Conservacion OK en todas las replicas: 1
-ALQ     : 0.0000 +- 0.0000
-AWTQ    : 0.0000 +- 0.0000
-ASUTIL  : 0.3743 +- 0.0020
-ASUTIL1 : 0.5994 +- 0.0028
-ASUTIL2 : 0.1493 +- 0.0042
-Suma ASUTIL1+ASUTIL2: 0.7487
-
-================ MODELO 3 (N=30, LS=10000) ================
-Conservacion OK en todas las replicas: 1
-ALQ     : 0.0739 +- 0.0045
-AWTQ    : 0.1479 +- 0.0085
-ASUTIL  : 0.7488 +- 0.0041
-ALQ1    : 0.0698 +- 0.0037 | ALQ2 : 0.0042 +- 0.0015
-AWTQ1   : 0.4390 +- 0.0126 | AWTQ2: 3.0795 +- 0.7958
-(Validacion teorica: ASUTIL deberia rondar 0.75)
-
-================ MODELO 4 (N=30, LS=10000) ================
-Conservacion OK en todas las replicas: 1
-ALQ     : 0.0739 +- 0.0047
-AWTQ    : 0.1476 +- 0.0089
-ASUTIL  : 0.7496 +- 0.0043
-Abandonos: 0.30 +- 0.47
-Prob Aband: 0.0001 +- 0.0001
-Reproducibilidad (dif ALQ, misma semilla 42): 0
-
-================ MODELO 1 (N=30, LS=10000) ================
-Conservacion OK en todas las replicas: 1
-ALQ     : 0.0739 +- 0.0045
-AWTQ    : 0.1479 +- 0.0085
-ASUTIL  : 0.7488 +- 0.0041
-Bloqueos: 0.00 +- 0.00
-T.Medio Bloq: NaN (0/30 corridas con bloqueos)
-
-================ MODELO 2 (N=30, LS=10000) ================
-Conservacion OK en todas las replicas: 1
-ALQ     : 0.0000 +- 0.0000
-AWTQ    : 0.0000 +- 0.0000
-ASUTIL  : 0.3743 +- 0.0020
-ASUTIL1 : 0.5994 +- 0.0028
-ASUTIL2 : 0.1493 +- 0.0042
-Suma ASUTIL1+ASUTIL2: 0.7487
-
-================ MODELO 3 (N=30, LS=10000) ================
-Conservacion OK en todas las replicas: 1
-ALQ     : 0.0739 +- 0.0045
-AWTQ    : 0.1479 +- 0.0085
-ASUTIL  : 0.7488 +- 0.0041
-ALQ1    : 0.0698 +- 0.0037 | ALQ2 : 0.0042 +- 0.0015
-AWTQ1   : 0.4390 +- 0.0126 | AWTQ2: 3.0795 +- 0.7958
-(Validacion teorica: ASUTIL deberia rondar 0.75)
-
-================ MODELO 4 (N=30, LS=10000) ================
-Conservacion OK en todas las replicas: 1
-ALQ     : 0.0739 +- 0.0047
-AWTQ    : 0.1476 +- 0.0089
-ASUTIL  : 0.7496 +- 0.0043
-Abandonos: 0.30 +- 0.47
+ALQ     : 0.0747 +- 0.0037
+AWTQ    : 0.1490 +- 0.0072
+ASUTIL  : 0.7505 +- 0.0036
+Abandonos: 0.40 +- 0.62
 Prob Aband: 0.0001 +- 0.0001
