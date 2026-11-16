@@ -6,14 +6,13 @@ Simulador de una cola simple desarrollado para **GNU Octave** como punto de part
 
 ## Estado del proyecto
 
-Los archivos actuales implementan el modelo base de **una cola, un servidor y tiempos entre arribos y de servicio uniformes**. La capacidad de cola está configurada en 200 entidades.
-
-Los cuatro modelos mencionados en la consigna (capacidad finita con pérdidas, dos servidores, dos colas y abandono por espera) son ampliaciones del modelo base y **no están implementados en estos archivos todavía**.
+Los archivos originales implementan el modelo base de **una cola, un servidor y tiempos entre arribos y de servicio uniformes**. La función `cola(p)` implementa además las cuatro variantes de la consigna.
 
 ## Archivos
 
 | Archivo | Responsabilidad |
 | --- | --- |
+| `cola.m` | Ejecuta cualquiera de los cuatro modelos y devuelve sus estadísticas en un struct. |
 | `COLASI.m` | Inicializa el sistema, solicita los parámetros y ejecuta el motor de eventos. |
 | `ARRIBE.m` | Procesa un arribo, agenda el siguiente y comienza el servicio si el servidor está libre. |
 | `DEPART.m` | Procesa una partida y, si hay clientes esperando, inicia el servicio del siguiente. |
@@ -24,7 +23,7 @@ Los cuatro modelos mencionados en la consigna (capacidad finita con pérdidas, d
 
 - GNU Octave instalado en el equipo.
 - Extensión de GNU Octave para Visual Studio Code (opcional, facilita la edición y ejecución desde el editor).
-- Los cinco archivos `.m` en la misma carpeta.
+- Los archivos `.m` del proyecto en la misma carpeta.
 
 > **Importante:** la extensión de VS Code no reemplaza a GNU Octave. La extensión integra el editor con el intérprete; también hay que instalar GNU Octave por separado. Se puede obtener desde [octave.org/download](https://www.octave.org/download).
 
@@ -93,7 +92,7 @@ Las estadísticas de base tiempo se obtienen dividiendo las áreas acumuladas po
 
 ## Observaciones sobre la implementación actual
 
-Esta versión es una base para desarrollar y verificar el modelo; antes de interpretar sus resultados como definitivos, deben revisarse estos aspectos:
+Los siguientes aspectos corresponden a la implementación original del modelo base (`COLASI.m` y sus rutinas), no a `cola.m`:
 
 - `ARRIBE.m` no guarda la hora de llegada de cada cliente que entra a la cola. Por eso el tiempo de espera que calcula `DEPART.m` con `ATTRIB` no es confiable.
 - La actualización de `STAT.m` se ejecuta después de procesar el evento. Para acumular correctamente el intervalo transcurrido, las estadísticas deben usar el estado del sistema que existía antes de ese evento.
@@ -102,14 +101,47 @@ Esta versión es una base para desarrollar y verificar el modelo; antes de inter
 - `OUTPT.m` calcula promedios dividiendo por `NES` y `TNOW`; si alguno vale cero, el resultado no está definido.
 - Los parámetros ingresados no tienen validaciones de rango.
 
-## Ampliaciones previstas según la consigna
+## Modelos de la consigna en `cola(p)`
 
-Estas reglas describen el comportamiento esperado de los incisos, no funcionalidades disponibles en el simulador actual:
+Los cuatro modelos se pueden ejecutar con la función `cola(p)`, que comparte un único motor de eventos discretos. Los archivos originales (`COLASI.m`, `ARRIBE.m`, `DEPART.m`, `STAT.m` y `OUTPT.m`) se mantienen como implementación interactiva del modelo base.
 
-1. **Cola con capacidad finita:** limitar la cantidad de clientes esperando y contar los arribos bloqueados cuando la cola esté llena.
-2. **Dos servidores en paralelo:** asignar primero al servidor 1 si ambos están libres y mantener la utilización de cada servidor por separado.
-3. **Dos colas y un servidor:** enviar cada arribo a la cola más corta (desempate a favor de la cola 1) y atender la cola más larga (también con desempate a favor de la cola 1).
-4. **Abandono por espera:** registrar el instante de arribo de cada cliente en cola y procesar un evento de abandono al superar el tiempo máximo de espera definido.
+| `p.modelo` | Variante |
+| --- | --- |
+| `1` | Un servidor y cola de capacidad finita. `p.QLIMIT` vale 10 si se omite. |
+| `2` | Dos servidores en paralelo y una cola compartida; se elige primero el servidor 1. |
+| `3` | Un servidor y dos colas; los arribos eligen la más corta y el servidor la más larga. |
+| `4` | Un servidor y abandono cuando se alcanza el tiempo máximo de espera. `p.TMAXWAIT` vale 3 si se omite. |
+
+Ejemplo desde GNU Octave, en la carpeta del proyecto:
+
+```octave
+p = struct('modelo', 1, 'LS', 1000, ...
+           'MINIAT', 1, 'MAXIAT', 3, ...
+           'MINST', 1, 'MAXST', 2);
+res = cola(p)
+```
+
+La función devuelve las estadísticas en `res`, entre ellas `NEE`, `NES`, `LQ`, `Nbloq`, `Naband`, `AWTQ`, `ALQ` y la utilización promedio `ASUTIL`. En el modelo 2, `ASUTIL1` y `ASUTIL2` informan la utilización de cada servidor por separado. En el modelo 3, `ALQ1` y `ALQ2` son los promedios separados por cola.
+
+La simulación observa el intervalo `[0, LS)`: no procesa eventos que ocurran exactamente en `LS`, pero acumula las estadísticas hasta ese instante. En el modelo 4, una entidad abandona al alcanzar `TMAXWAIT`; si ese instante coincide con una partida, se procesa primero la partida. `res.conservacion` debe ser cero y permite comprobar que los arribos procesados coinciden con las entidades servidas, en cola, en servicio, bloqueadas o abandonadas.
+
+### Probar `cola.m`
+
+Desde la terminal integrada de VS Code, ubicada en la carpeta del proyecto, se puede hacer una corrida reproducible del modelo 1 y comprobar la conservación de entidades:
+
+```powershell
+octave --quiet --eval "p=struct('modelo',1,'LS',1000,'MINIAT',1,'MAXIAT',3,'MINST',1,'MAXST',2); rand('twister',42); r=cola(p); disp(r); assert(r.conservacion==0)"
+```
+
+Para probar individualmente los otros modelos, cambiar `'modelo',1` por `'modelo',2`, `'modelo',3` o `'modelo',4`. La semilla fija (`42`) hace que la corrida sea repetible.
+
+Para ejecutar 30 réplicas de cada uno de los cuatro modelos y revisar que se conserve el número de entidades en todas ellas:
+
+```powershell
+octave --quiet --eval "correr_experimentos"
+```
+
+El resumen muestra `Conservacion OK en todas las replicas: 1` cuando la comprobación pasa. Los comandos adicionales de reproducibilidad y pruebas de estrés están en [`reproduccion.txt`](./reproduccion.txt).
 
 Una verificación útil para el modelo base es la conservación de entidades:
 

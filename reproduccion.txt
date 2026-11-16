@@ -1,0 +1,23 @@
+========================================================================
+COMANDOS DE REPRODUCCIÓN - TRABAJO INTEGRADOR CÁLCULO NUMÉRICO (GRUPO 3)
+Integrantes: Sofía Belén Guardia, Jesús Casabillanos
+========================================================================
+
+1. EJECUCIÓN DE LAS 30 RÉPLICAS DEL INFORME (Parámetros base, LS=10000, semillas 101 a 130):
+octave-cli --quiet --eval "correr_experimentos"
+
+2. VERIFICACIÓN DE REPRODUCIBILIDAD (Misma semilla = resultados idénticos):
+octave-cli --quiet --eval "p=struct('modelo',1,'LS',1000,'MINIAT',1,'MAXIAT',3,'MINST',1,'MAXST',2); rand('seed',42); r1=cola(p); rand('seed',42); r2=cola(p); disp([r1.ALQ - r2.ALQ, r1.conservacion])"
+
+3. PRUEBAS DE ESTRÉS / VERIFICACIÓN DE REGLAS (Arribos U(0.1, 0.2), Servicios U(1, 2)):
+- Modelo 1 (Bloqueos por cola llena, semilla 7):
+octave-cli --quiet --eval "p=struct('modelo',1,'LS',100,'MINIAT',0.1,'MAXIAT',0.2,'MINST',1,'MAXST',2); rand('seed',7); r=cola(p); fprintf('NEE=%d NES=%d LQ=%d Nbloq=%d cons=%d\n',r.NEE,r.NES,r.LQ,r.Nbloq,r.conservacion)"
+
+- Modelo 2 (Utilización de 2 servidores paralelos, cola única, semilla 9):
+octave-cli --quiet --eval "p=struct('modelo',2,'LS',500,'MINIAT',0.1,'MAXIAT',0.2,'MINST',1,'MAXST',2); rand('seed',9); r=cola(p); fprintf('NEE=%d NES=%d LQ=%d U1=%.4f U2=%.4f cons=%d\n',r.NEE,r.NES,r.LQ,r.ASUTIL1,r.ASUTIL2,r.conservacion)"
+
+- Modelo 3 (1 servidor y 2 colas independientes, semilla 9):
+octave-cli --quiet --eval "p=struct('modelo',3,'LS',500,'MINIAT',0.1,'MAXIAT',0.2,'MINST',1,'MAXST',2); rand('seed',9); r=cola(p); fprintf('NEE=%d NES=%d LQ1=%d LQ2=%d ALQ1=%.3f ALQ2=%.3f AWTQ1=%.3f AWTQ2=%.3f cons=%d\n',r.NEE,r.NES,r.LQ1,r.LQ2,r.ALQ1,r.ALQ2,r.AWTQ1,r.AWTQ2,r.conservacion)"
+
+- Modelo 4 (Abandonos por impaciencia, semilla 7):
+octave-cli --quiet --eval "p=struct('modelo',4,'LS',100,'MINIAT',0.1,'MAXIAT',0.2,'MINST',1,'MAXST',2); rand('seed',7); r=cola(p); fprintf('NEE=%d NES=%d LQ=%d Naband=%d cons=%d\n',r.NEE,r.NES,r.LQ,r.Naband,r.conservacion)"
